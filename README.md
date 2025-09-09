@@ -28,7 +28,7 @@ Cada classe deve ter apenas **uma responsabilidade**.
 
 ### 2. Open/Closed Principle (OCP)
 As classes devem estar **abertas para extensão**, mas **fechadas para modificação**.  
-✅ Exemplo: Criar uma nova classe checkout fechada para alteracoes e aberta para extensão, responsavel por realizar pagamentos, podendo adicionar novos tipos de pagamento no codigo sem modificar a classe checkout.
+✅ Exemplo: Criar uma nova classe `checkout` fechada para alteracoes e aberta para extensão, responsavel por realizar pagamentos, podendo adicionar novos tipos de pagamento no codigo sem modificar a classe checkout.
 ❌ Exemplo incorreto:  alterar a classe `PaymentMethod` para incluir novas regras, novos tipos de pagamento.
 
 ---
@@ -50,6 +50,7 @@ final pix = PixPayment();
 checkout.process(credit, 500); // Funciona
 checkout.process(debit, 200);  // Funciona
 checkout.process(pix, 100);    // Funciona
+```
 
 ❌ Exemplo incorreto:  Forçar todos os métodos de pagamento a implementar coisas que não fazem sentido.
 Por exemplo, se PaymentMethod tivesse validateCard(), o Pix seria obrigado a implementar algo que não se aplica a ele, quebrando o LSP.
@@ -60,10 +61,11 @@ Por exemplo, se PaymentMethod tivesse validateCard(), o Pix seria obrigado a imp
 ### 4. Interface Segregation Principle (ISP)
 Os clientes não devem ser forçados a depender de interfaces que **não utilizam**.  
 
-✅ No exemplo, criamos a abstração CardPayment apenas para métodos que realmente usam cartão (CreditPayment e DebitPayment).
-O PixPayment implementa apenas o que precisa (PaymentMethod).
+✅ No exemplo, criamos a abstração `CardPayment` apenas para métodos que realmente usam cartão `(CreditPayment e DebitPayment)`.
+O `PixPayment` implementa apenas o que precisa `(PaymentMethod)`.
 
-❌ Se tivéssemos colocado validateCard() direto na interface PaymentMethod, o Pix seria obrigado a ter esse método sem necessidade, o que fere o ISP
+❌ Exemplo incorreto: Se tivéssemos colocado `validateCard()` direto na interface `PaymentMethod`, o Pix seria obrigado a ter esse método sem necessidade, o que fere o ISP
+ 
 ---
 
 ### 5. Dependency Inversion Principle (DIP)
@@ -80,11 +82,13 @@ final pixCheckout = Checkout(PixPayment());
 
 creditCheckout.process(500); 
 debitCheckout.process(200);  
-pixCheckout.process(100); 
+pixCheckout.process(100);
+```
 
 Assim, o Checkout funciona com qualquer método de pagamento, sem precisar alterar a classe quando adicionamos novos tipos de pagamento, garantindo baixo acoplamento e maior flexibilidade.
 
-❌ Forma errada: criar instâncias concretas dentro do Checkout, como CreditPayment() ou PixPayment(). Isso faz o módulo depender de implementações específicas, quebrando o DIP.
+❌ Exemplo incorreto:  criar instâncias concretas dentro do Checkout, como CreditPayment() ou PixPayment(). Isso faz o módulo depender de implementações específicas, quebrando o DIP.
+
 ---
 
 ## 🚀 Como rodar o projeto
